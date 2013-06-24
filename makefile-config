@@ -1,0 +1,78 @@
+#####################################################################
+# This file defines where various build tools live and gets included
+# in each of the makefiles. 
+#
+#
+# OS       : is the Operative System (Windows, Linux, Unix, etc.)
+# JDK_HOME : is the directory where the JDK is installed 
+#
+#####################################################################
+
+
+# Selects the proper OS
+OS= Linux
+#OS= Windows
+
+
+# Selects the proper shell
+# On MS-DOS systems, COMSPEC variable refers to the default shell (usually c:\windows\command.com)
+#SHELL= COMSPEC
+SHELL= sh
+
+
+# Selects the proper make tool
+MAKE= make
+#MAKE= c:\programmi\bin\make
+
+
+# Selects the proper jdk home
+ifeq (${OS},Windows) 
+	JDK_HOME= C:/Programmi/Java/jdk1.6.0_10
+else
+	JDK_HOME= /user/local/jdk1.4.2
+endif
+
+
+# Sets the bin path
+#JDK_BIN=$(JDK_HOME)/bin/
+JDK_BIN=
+
+
+# Selects the proper java tools
+JAVA=     $(JDK_BIN)java
+JAVAC=    $(JDK_BIN)javac
+JAVADOC=  $(JDK_BIN)javadoc
+JAR=      $(JDK_BIN)jar
+JARSIGNER=$(JDK_BIN)jarsigner
+
+
+# Tries to select the proper make-dir command
+ifeq (${SHELL},$(COMSPEC)) 
+	MKDIR= mkdir
+else
+	MKDIR= mkdir -p
+endif
+
+
+# Tries to select the proper remove command
+ifeq (${SHELL},$(COMSPEC)) 
+	RM= del
+else
+	RM= rm -f
+endif
+
+
+# Tries to select the proper copy command
+ifeq (${SHELL},$(COMSPEC)) 
+	CP= copy
+else
+	CP= cp
+endif
+
+
+# Tries to select the proper rename/move command
+ifeq (${SHELL},$(COMSPEC)) 
+	MV= move
+else
+	MV= mv
+endif
