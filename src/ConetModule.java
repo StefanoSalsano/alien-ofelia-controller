@@ -50,8 +50,9 @@ public class ConetModule implements IFloodlightModule, IOFMessageListener, MsgTr
 
     /** The default (first instanced) ConetModule */
     public static ConetModule INSTANCE=null;
-
-
+ 
+    /** The VLAN ID of the flowspace, it must be set in the configuration file */   
+    public static int VLAN_ID=0;
 
     /** Learning switch idle timeout [in seconds] */
     //public short sw_idle_timeout=30;
@@ -207,13 +208,13 @@ public class ConetModule implements IFloodlightModule, IOFMessageListener, MsgTr
            {  int client_ipaddr=(int)BinTools.fourBytesToInt(BinAddrTools.ipv4addrToBytes(conet_clients[i]));
               byte[] client_macaddr=getConetNodeMacAddress(conet_clients[i]);
               short port=getConetNodePort(dp,conet_clients[i]);
-              forwardToClient(dp,command,(short)16,client_macaddr,client_ipaddr,port); 
+              forwardToClient(dp,command,(short)VLAN_ID,client_macaddr,client_ipaddr,port); 
            }
            for (int i=0; i<conet_servers.length; i++)
            {  int server_ipaddr=(int)BinTools.fourBytesToInt(BinAddrTools.ipv4addrToBytes(conet_servers[i]));
               byte[] server_macaddr=getConetNodeMacAddress(conet_servers[i]);
               short port=getConetNodePort(dp,conet_servers[i]);
-              forwardToServer(dp,command,(short)16,server_macaddr,server_ipaddr,port); 
+              forwardToServer(dp,command,(short)VLAN_ID,server_macaddr,server_ipaddr,port); 
            }
         }
     }   
@@ -570,10 +571,9 @@ public class ConetModule implements IFloodlightModule, IOFMessageListener, MsgTr
    
         IOFSwitch sw=switches.get(Long.valueOf(datapath));
         if (sw!=null)
-        {   //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ STATIC VLAN 16 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-            //@@@@@@
-            //doFlowModStatic(sw,command,PRIORITY_REDIRECTION,(short)0,(short)16,(short)0x800,null,0,null,dest_ipaddr,ip_proto,tag,Arrays.asList(actions),(short)actions_len);
-            doFlowModStatic(sw,command,PRIORITY_REDIRECTION,(short)0,(short)16,(short)0x800,null,0,null,dest_ipaddr,ip_proto,tag,actions_vector,(short)actions_len);
+        {   
+            //doFlowModStatic(sw,command,PRIORITY_REDIRECTION,(short)0,(short)VLAN_ID,(short)0x800,null,0,null,dest_ipaddr,ip_proto,tag,Arrays.asList(actions),(short)actions_len);
+            doFlowModStatic(sw,command,PRIORITY_REDIRECTION,(short)0,(short)VLAN_ID,(short)0x800,null,0,null,dest_ipaddr,ip_proto,tag,actions_vector,(short)actions_len);
             //@@@@@@
             //sw.flush();
         }
@@ -1430,7 +1430,7 @@ public class ConetModule implements IFloodlightModule, IOFMessageListener, MsgTr
            println("DEBUG: ADD STATIC FLOW ENTRY FOR SW 0x"+Long.toHexString(sw.getId()));
            //short port_in=(short)4;
            short port_in=(short)0;
-           short vlan=(short)16;
+           short vlan=(short)VLAN_ID;
            short eth_proto=(short)0x800;
            //byte[] src_macaddr=BinTools.hexStringToBytes(BinAddrTools.trimHexString("02:03:00:00:00:b2"));
            byte[] src_macaddr=null;
