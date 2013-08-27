@@ -41,10 +41,10 @@ public class ConetModule implements IFloodlightModule, IOFMessageListener, MsgTr
     protected static final short PRIORITY_REDIRECTION=300;
 
     /** Conetcontroller verbose output */
-    static final boolean CONET_VERBOSE=false;
+    public static boolean CONET_VERBOSE=false;
 
     /** LearningSwitch verbose output */
-    static final boolean LEARNING_SWITCH_VERBOSE=false;
+    public static boolean LEARNING_SWITCH_VERBOSE=false;
 
 
 
