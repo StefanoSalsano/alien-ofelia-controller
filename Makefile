@@ -52,7 +52,7 @@ all:
 conetcontroller: 
 	@echo ------------------ MAKING CONET CONTROLLER ------------------
 	cd $(SRCDIR);	\
-	$(JAVAC) -classpath "../$(CLASSDIR)$(COLON)../$(LIBDIR)/floodlight.jar$(COLON)../$(LIBDIR)/json-simple-1.1.1.jar$(COLON)../$(LIBDIR)/conet.jar" -d ../$(CLASSDIR) org.zoolu.tools/*.java org.zoolu.net/*.java org.zoolu.net.message/*.java *.java;	\
+	$(JAVAC) -classpath "../$(CLASSDIR)$(COLON)../$(LIBDIR)/floodlight.jar$(COLON)../$(LIBDIR)/json-simple-1.1.1.jar$(COLON)../$(LIBDIR)/conet.jar" -d ../$(CLASSDIR) org/zoolu/tools/*.java org/zoolu/net/*.java org/zoolu/net/message/*.java local/conet/*.java;	\
 	cd ..
 
 	cd $(CLASSDIR);	\
