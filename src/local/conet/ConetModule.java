@@ -54,6 +54,8 @@ public class ConetModule implements IFloodlightModule, IOFMessageListener, MsgTr
     /** The VLAN ID of the flowspace, it must be set in the configuration file */   
     public static int VLAN_ID=0;
 
+	public static boolean demoSendOpenMsg=false;
+
     /** Learning switch idle timeout [in seconds] */
     //public short sw_idle_timeout=30;
     public short sw_idle_timeout=60;
